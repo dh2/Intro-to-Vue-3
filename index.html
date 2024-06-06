@@ -21,7 +21,6 @@
           </div>
           <div class="product-info">
             <h1>{{ title }}</h1>
-
             <p v-if="inStock">In Stock</p>
             <p v-else>Out of Stock</p>
             <ul>
@@ -36,6 +35,7 @@
               :style="{ backgroundColor: variant.color }">
             </div>
             
+
             <button class="button" :class="{ disabledButton: !inStock }" :disabled="!inStock" v-on:click="addToCart">Add to Cart</button>
           </div>
         </div>

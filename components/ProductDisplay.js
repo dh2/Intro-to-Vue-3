@@ -3,6 +3,10 @@ app.component('product-display', {
         premium: {
             type: Boolean,
             required: true
+        },
+        cart: {
+            type: Array,
+            required: true
         }
     },
     template:
@@ -29,6 +33,7 @@ app.component('product-display', {
             
 
             <button class="button" :class="{ disabledButton: !inStock }" :disabled="!inStock" v-on:click="addToCart">Add to Cart</button>
+            <button class="button" :class="{ disabledButton: !inCart }" :disabled="!inCart" v-on:click="removeFromCart">Remove from Cart</button>
         </div>
         </div>
     </div>
@@ -48,7 +53,11 @@ app.component('product-display', {
     },
     methods: {
         addToCart() {
-            this.cart += 1
+            this.$emit('add-to-cart', { action: 'add', id: this.variants[this.selectedVariant].id });
+        },
+        removeFromCart() {
+            const id = this.variants[this.selectedVariant].id;
+            this.$emit('remove-from-cart', { action: 'remove', index: this.cart.findIndex(c => c === id) });
         },
         updateVariant(variantIndex) {
             this.selectedVariant = variantIndex;
@@ -60,6 +69,12 @@ app.component('product-display', {
         },
         inStock() {
             return this.variants[this.selectedVariant].quantity > 0;
+        },
+        inCart() {
+            const id = this.variants[this.selectedVariant].id;
+            const index = this.cart.findIndex(c => c === id);
+            console.log(index);
+            return index >= 0;
         },
         image() {
             return `./assets/images/socks_${this.variants[this.selectedVariant].color}.jpg`;

@@ -31,11 +31,15 @@ app.component('product-display', {
                     :style="{ backgroundColor: variant.color }">
                 </div>
                 
-
-                <button class="button" :class="{ disabledButton: !inStock }" :disabled="!inStock" v-on:click="addToCart">Add to Cart</button>
-                <button class="button" :class="{ disabledButton: !inCart }" :disabled="!inCart" v-on:click="removeFromCart">Remove from Cart</button>
+                <div>
+                    <button class="button" :class="{ disabledButton: !inStock }" :disabled="!inStock" v-on:click="addToCart">Add to Cart</button>
+                    <button class="button" :class="{ disabledButton: !inCart }" :disabled="!inCart" v-on:click="removeFromCart">Remove from Cart</button>
+                </div>
             </div>
         </div>
+        
+        <review-entry v-if="reviews.length" :reviews="reviews" />
+        <review-form  @review-submitted="handleReview" />
     </div>
     `,
     data() {
@@ -48,7 +52,8 @@ app.component('product-display', {
               { id: 2234, color: 'green', quantity: 50, onSale: false },
               { id: 2235, color: 'blue', quantity: 0, onSale: false },
               { id: 2235, color: 'purple', quantity: 10, onSale: false },
-            ]
+            ],
+            reviews: []
         }
     },
     methods: {
@@ -61,6 +66,9 @@ app.component('product-display', {
         },
         updateVariant(variantIndex) {
             this.selectedVariant = variantIndex;
+        },
+        handleReview(review) {
+            this.reviews.push(review);
         }
     },
     computed: {
@@ -73,7 +81,6 @@ app.component('product-display', {
         inCart() {
             const id = this.variants[this.selectedVariant].id;
             const index = this.cart.findIndex(c => c === id);
-            console.log(index);
             return index >= 0;
         },
         image() {

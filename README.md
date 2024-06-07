@@ -1,7 +1,7 @@
-#Purpose
+# Purpose
 Haven't had a lot of reason to learn other frameworks outside of React.  So taking some time to learn Vue and kicked off with as simple a tutorial as I could find.
 
-#Tweaks
+# Tweaks
 * I added a third image/variety of Sock
 * Started keeping in the code challenges around lesson 6?
 * Remove from cart is contingent on the variant being in the cart already
